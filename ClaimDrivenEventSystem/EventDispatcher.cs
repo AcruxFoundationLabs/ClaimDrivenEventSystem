@@ -39,9 +39,19 @@ public class EventDispatcher<TArgs>
 
 	public void Add(EventListener<TArgs> listener)
 	{
+		if (Listeners.Contains(listener)) return;
+
 		Listeners.Add(listener);
-		listener.Dispatcher = this;
+		listener.Dispatchers.Add(this);
 		ReorderListeners();
+	}
+
+	public void Remove(EventListener<TArgs> listener)
+	{
+		if (!Listeners.Contains(listener)) return;
+
+		Listeners.Remove(listener);
+		listener.Dispatchers.Remove(this);
 	}
 
 	internal void ReorderListeners()

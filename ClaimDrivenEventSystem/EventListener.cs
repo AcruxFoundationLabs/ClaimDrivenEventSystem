@@ -13,10 +13,13 @@ public class EventListener<TArgs>
 		set
 		{
 			_priority = value;
-			Dispatcher?.ReorderListeners();
+			foreach(var dispatcher in Dispatchers)
+			{
+				dispatcher?.ReorderListeners();
+			}
 		}
 	}
 	private byte _priority;
 
-	internal EventDispatcher<TArgs>? Dispatcher { get; set; }
+	internal List<EventDispatcher<TArgs>?> Dispatchers { get; } = [];
 }
