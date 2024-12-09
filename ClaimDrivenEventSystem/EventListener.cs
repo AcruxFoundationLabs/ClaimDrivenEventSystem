@@ -1,12 +1,39 @@
 ﻿namespace CDES;
 
+/// <summary>
+/// Manages the behaviour taken in the invokation of an event from a <see cref="EventDispatcher{TArgs}"/>.<br></br>
+/// </summary>
+/// <typeparam name="TArgs"></typeparam>
 public class EventListener<TArgs>
 {
+	/// <summary>
+	/// Defines the signature for the <see cref="OnCorroborate"/> property.
+	/// </summary>
+	/// <param name="args">The arguments of the raised dispatcher.</param>
+	/// <returns>A <see cref="bool"/> indicating if this listener "claims" the event.</returns>
 	public delegate bool CorroborateDelegate(TArgs args);
+
+	/// <summary>
+	/// Defines the signature for the <see cref="OnAccepted"/> property.
+	/// </summary>
+	/// <param name="args">The arguments of the raised dispatcher.</param>
 	public delegate void AcceptedDelegate(TArgs args);
 
+	/// <summary>
+	/// Used to determinate if this listener will "claim" the event invokation to realize
+	/// its defined behaviour, or if it "rejects" it.
+	/// </summary>
 	public CorroborateDelegate? OnCorroborate { get; set; }
+
+	/// <summary>
+	/// The behaviour of this listener that will be executed if the event invokation is "claimed".
+	/// </summary>
 	public AcceptedDelegate? OnAccepted { get; set; }
+
+	/// <summary>
+	/// Used to define the order of corroborance in a <see cref="EventDispatcher{TArgs}"/>.
+	/// The lower the value, the more priority.
+	/// </summary>
 	public byte Priority
 	{
 		get => _priority;
