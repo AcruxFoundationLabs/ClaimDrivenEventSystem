@@ -1,4 +1,4 @@
-﻿namespace CDES;
+﻿namespace Acrux.CDES;
 
 /// <summary>
 /// Manages the behaviour taken in the invokation of an event from a <see cref="EventDispatcher{TArgs}"/>.<br></br>
