@@ -43,8 +43,8 @@ public class EventDispatcherTests
 		onCommandSent.Add(sumListener);
 
 		// Disptcher invokation
-		onCommandSent.Invoke( new(){Keywords = ["print", "Hi"]} );
-		onCommandSent.Invoke(new() { Keywords = ["party"] });
-		onCommandSent.Invoke(new() { Keywords = ["invalid"] });
+		onCommandSent.Invoke( () => new() { Keywords = ["print", "Hi"]} );
+		onCommandSent.Invoke( () => new() { Keywords = ["party"] });
+		onCommandSent.Invoke( () => new() { Keywords = ["invalid"] });
 	}
 }

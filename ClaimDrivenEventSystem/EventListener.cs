@@ -3,21 +3,22 @@
 /// <summary>
 /// Manages the behaviour taken in the invokation of an event from a <see cref="EventDispatcher{TArgs}"/>.<br></br>
 /// </summary>
-/// <typeparam name="TArgs"></typeparam>
-public class EventListener<TArgs>
+/// <typeparam name="TCorroborateArgs"></typeparam>
+/// <typeparam name="TClaimArgs"></typeparam>
+public class EventListener<TCorroborateArgs, TClaimArgs>
 {
 	/// <summary>
 	/// Defines the signature for the <see cref="OnCorroborate"/> property.
 	/// </summary>
 	/// <param name="args">The arguments of the raised dispatcher.</param>
 	/// <returns>A <see cref="bool"/> indicating if this listener "claims" the event.</returns>
-	public delegate bool CorroborateDelegate(TArgs args);
+	public delegate bool CorroborateDelegate(TCorroborateArgs args);
 
 	/// <summary>
 	/// Defines the signature for the <see cref="OnAccepted"/> property.
 	/// </summary>
 	/// <param name="args">The arguments of the raised dispatcher.</param>
-	public delegate void AcceptedDelegate(TArgs args);
+	public delegate void AcceptedDelegate(TClaimArgs args);
 
 	/// <summary>
 	/// Used to determinate if this listener will "claim" the event invokation to realize
@@ -42,11 +43,20 @@ public class EventListener<TArgs>
 			_priority = value;
 			foreach(var dispatcher in Dispatchers)
 			{
-				dispatcher?.ReorderListeners();
+				dispatcher.ReorderListeners();
 			}
 		}
 	}
 	private byte _priority;
 
-	internal List<EventDispatcher<TArgs>?> Dispatchers { get; } = [];
+	internal List<EventDispatcher<TCorroborateArgs, TClaimArgs>> Dispatchers { get; } = [];
+}
+
+/// <summary>
+/// Manages the behaviour taken in the invokation of an event from a <see cref="EventDispatcher{TArgs}"/>.<br></br>
+/// </summary>
+/// <typeparam name="TArgs"></typeparam>
+public class EventListener<TArgs> : EventListener<TArgs, TArgs>
+{
+
 }
