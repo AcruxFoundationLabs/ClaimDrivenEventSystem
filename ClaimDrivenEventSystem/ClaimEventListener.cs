@@ -1,11 +1,11 @@
 ﻿namespace Acrux.CDES;
 
 /// <summary>
-/// Manages the behaviour taken in the invokation of an event from a <see cref="EventDispatcher{TArgs}"/>.<br></br>
+/// Manages the behaviour taken in the invokation of an event from a <see cref="ClaimEventDispatcher{TArgs}"/>.<br></br>
 /// </summary>
 /// <typeparam name="TCorroborateArgs"></typeparam>
 /// <typeparam name="TClaimArgs"></typeparam>
-public class EventListener<TCorroborateArgs, TClaimArgs>
+public class ClaimEventListener<TCorroborateArgs, TClaimArgs>
 {
 	/// <summary>
 	/// Defines the signature for the <see cref="OnCorroborate"/> property.
@@ -32,7 +32,7 @@ public class EventListener<TCorroborateArgs, TClaimArgs>
 	public AcceptedDelegate? OnAccepted { get; set; }
 
 	/// <summary>
-	/// Used to define the order of corroborance in a <see cref="EventDispatcher{TArgs}"/>.
+	/// Used to define the order of corroborance in a <see cref="ClaimEventDispatcher{TArgs}"/>.
 	/// The lower the value, the more priority.
 	/// </summary>
 	public byte Priority
@@ -49,14 +49,14 @@ public class EventListener<TCorroborateArgs, TClaimArgs>
 	}
 	private byte _priority;
 
-	internal List<EventDispatcher<TCorroborateArgs, TClaimArgs>> Dispatchers { get; } = [];
+	internal List<ClaimEventDispatcher<TCorroborateArgs, TClaimArgs>> Dispatchers { get; } = [];
 }
 
 /// <summary>
-/// Manages the behaviour taken in the invokation of an event from a <see cref="EventDispatcher{TArgs}"/>.<br></br>
+/// Manages the behaviour taken in the invokation of an event from a <see cref="ClaimEventDispatcher{TArgs}"/>.<br></br>
 /// </summary>
 /// <typeparam name="TArgs"></typeparam>
-public class EventListener<TArgs> : EventListener<TArgs, TArgs>
+public class ClaimEventListener<TArgs> : ClaimEventListener<TArgs, TArgs>
 {
 
 }

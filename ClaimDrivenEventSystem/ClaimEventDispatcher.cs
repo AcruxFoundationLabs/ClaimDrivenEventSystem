@@ -3,23 +3,23 @@
 namespace Acrux.CDES;
 
 /// <summary>
-/// Manages the invokation of an event, where different <see cref="EventListener{TArgs}"/> are attached to in.<br></br>
+/// Manages the invokation of an event, where different <see cref="ClaimEventListener{TArgs}"/> are attached to in.<br></br>
 /// When invoked the handler asks the listeners one by one in order if they want to "claim" the event or "reject" it.<br></br>
 /// After a listener "claims" an event, its functionality is invoked and the dispatch finishes.
 /// </summary>
 /// <typeparam name="TCorroborateArgs">The values handed in to the listener to corroborate the claim</typeparam>
 /// /// <typeparam name="TClaimArgs">The values handed in to the listener for the claimed behaviour</typeparam>
-public class EventDispatcher<TCorroborateArgs, TClaimArgs>
+public class ClaimEventDispatcher<TCorroborateArgs, TClaimArgs>
 {
-	private List<EventListener<TCorroborateArgs, TClaimArgs>> Listeners { get; } = [];
+	private List<ClaimEventListener<TCorroborateArgs, TClaimArgs>> Listeners { get; } = [];
 
-	public static EventDispatcher<TCorroborateArgs, TClaimArgs> operator +(EventDispatcher<TCorroborateArgs, TClaimArgs> dispatcher, EventListener<TCorroborateArgs, TClaimArgs> listener)
+	public static ClaimEventDispatcher<TCorroborateArgs, TClaimArgs> operator +(ClaimEventDispatcher<TCorroborateArgs, TClaimArgs> dispatcher, ClaimEventListener<TCorroborateArgs, TClaimArgs> listener)
 	{
 		dispatcher.Add(listener);
 		return dispatcher;
 	}
 
-	public static EventDispatcher<TCorroborateArgs, TClaimArgs> operator -(EventDispatcher<TCorroborateArgs, TClaimArgs> dispatcher, EventListener<TCorroborateArgs, TClaimArgs> listener)
+	public static ClaimEventDispatcher<TCorroborateArgs, TClaimArgs> operator -(ClaimEventDispatcher<TCorroborateArgs, TClaimArgs> dispatcher, ClaimEventListener<TCorroborateArgs, TClaimArgs> listener)
 	{
 		dispatcher.Remove(listener);
 		return dispatcher;
@@ -41,7 +41,7 @@ public class EventDispatcher<TCorroborateArgs, TClaimArgs>
 		}
 
 		Console.WriteLine("Corroborating Listeners...");
-		EventListener<TCorroborateArgs, TClaimArgs>? suitableListener = null;
+		ClaimEventListener<TCorroborateArgs, TClaimArgs>? suitableListener = null;
 		foreach (var listener in Listeners)
 		{
 			TCorroborateArgs _corroborateArgs = corroborateArgs.IsFirst ? corroborateArgs.First : corroborateArgs.Second.Invoke();
@@ -67,10 +67,10 @@ public class EventDispatcher<TCorroborateArgs, TClaimArgs>
 	}
 
 	/// <summary>
-	/// Attaches an <see cref="EventListener{TArgs}"/> to this dispatcher.
+	/// Attaches an <see cref="ClaimEventListener{TArgs}"/> to this dispatcher.
 	/// </summary>
-	/// <param name="listener">The <see cref="EventListener{TArgs}"/> to attach.</param>
-	public void Add(EventListener<TCorroborateArgs, TClaimArgs> listener)
+	/// <param name="listener">The <see cref="ClaimEventListener{TArgs}"/> to attach.</param>
+	public void Add(ClaimEventListener<TCorroborateArgs, TClaimArgs> listener)
 	{
 		if (Listeners.Contains(listener)) return;
 
@@ -80,10 +80,10 @@ public class EventDispatcher<TCorroborateArgs, TClaimArgs>
 	}
 
 	/// <summary>
-	/// Detaches an <see cref="EventListener{TArgs}"/> from this dispatcher.
+	/// Detaches an <see cref="ClaimEventListener{TArgs}"/> from this dispatcher.
 	/// </summary>
-	/// <param name="listener">The <see cref="EventListener{TArgs}"/> to attach.</param>
-	public void Remove(EventListener<TCorroborateArgs, TClaimArgs> listener)
+	/// <param name="listener">The <see cref="ClaimEventListener{TArgs}"/> to attach.</param>
+	public void Remove(ClaimEventListener<TCorroborateArgs, TClaimArgs> listener)
 	{
 		if (!Listeners.Contains(listener)) return;
 
@@ -98,12 +98,12 @@ public class EventDispatcher<TCorroborateArgs, TClaimArgs>
 }
 
 /// <summary>
-/// Manages the invokation of an event, where different <see cref="EventListener{TArgs}"/> are attached to in.<br></br>
+/// Manages the invokation of an event, where different <see cref="ClaimEventListener{TArgs}"/> are attached to in.<br></br>
 /// When invoked the handler asks the listeners one by one in order if they want to "claim" the event or "reject" it.<br></br>
 /// After a listener "claims" an event, its functionality is invoked and the dispatch finishes.
 /// </summary>
 /// <typeparam name="TCorroborateArgs">The values handed in to the listener.</typeparam>
-public class EventDispatcher<TArgs> : EventDispatcher<TArgs, TArgs>
+public class ClaimEventDispatcher<TArgs> : ClaimEventDispatcher<TArgs, TArgs>
 {
 	public void Invoke(Either<TArgs, Func<TArgs>> args)
 	{

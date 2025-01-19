@@ -42,10 +42,10 @@ public class EventDispatcherTests
 	public void TestSingleGeneric()
 	{
 		// Dispatcher creation
-		EventDispatcher<CommandSentData> onCommandSent = new();
+		ClaimEventDispatcher<CommandSentData> onCommandSent = new();
 
 		// Listener 1
-		EventListener<CommandSentData> printListener = new();
+		ClaimEventListener<CommandSentData> printListener = new();
 		printListener.Priority = 0;
 		printListener.OnCorroborate = (CommandSentData data) =>
 		{
@@ -59,7 +59,7 @@ public class EventDispatcherTests
 		onCommandSent.Add(printListener);
 
 		// Listener 2
-		EventListener<CommandSentData> sumListener = new();
+		ClaimEventListener<CommandSentData> sumListener = new();
 		sumListener.Priority = 0;
 		sumListener.OnCorroborate = (CommandSentData data) =>
 		{
@@ -81,10 +81,10 @@ public class EventDispatcherTests
 	[TestMethod]
 	public void TestMultipleGeneric()
 	{
-		EventDispatcher<Task, (Task task, Task.TaskManager manager)> taskDeliveredEvent = new();
+		ClaimEventDispatcher<Task, (Task task, Task.TaskManager manager)> taskDeliveredEvent = new();
 
 		// Student
-		taskDeliveredEvent += new EventListener<Task, (Task, Task.TaskManager)>()
+		taskDeliveredEvent += new ClaimEventListener<Task, (Task, Task.TaskManager)>()
 		{
 			OnCorroborate = (Task task) => task.Kind == "Homework",
 			OnAccepted = ((Task task, Task.TaskManager manager) args) =>
@@ -95,7 +95,7 @@ public class EventDispatcherTests
 		};
 
 		// Baker
-		taskDeliveredEvent += new EventListener<Task, (Task task, Task.TaskManager manager)>()
+		taskDeliveredEvent += new ClaimEventListener<Task, (Task task, Task.TaskManager manager)>()
 		{
 			OnCorroborate = (Task task) => task.Kind == "Bake",
 			OnAccepted = ((Task task, Task.TaskManager manager) args) =>
