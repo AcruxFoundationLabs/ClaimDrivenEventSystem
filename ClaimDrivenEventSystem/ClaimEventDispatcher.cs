@@ -31,7 +31,7 @@ public class ClaimEventDispatcher<TCorroborateArgs, TClaimArgs>
 	/// </summary>
 	/// <param name="corroborateArgs">The arguments of the event raise handed to the listener to decide if claiming will be done.</param>
 	/// <param name="claimArgs">The arguments of the event handed-in for the claimed behaviour.</param>
-	public void Invoke(Either<TCorroborateArgs, Func<TCorroborateArgs>> corroborateArgs, Either<TClaimArgs, Func<TClaimArgs>> claimArgs)
+	public void Invoke(ValueOrFunc<TCorroborateArgs> corroborateArgs, ValueOrFunc<TClaimArgs> claimArgs)
 	{
 		Console.WriteLine("Dispatching...");
 		if (Listeners.Count == 0)
@@ -105,7 +105,7 @@ public class ClaimEventDispatcher<TCorroborateArgs, TClaimArgs>
 /// <typeparam name="TCorroborateArgs">The values handed in to the listener.</typeparam>
 public class ClaimEventDispatcher<TArgs> : ClaimEventDispatcher<TArgs, TArgs>
 {
-	public void Invoke(Either<TArgs, Func<TArgs>> args)
+	public void Invoke(ValueOrFunc<TArgs> args)
 	{
 		Invoke(args, args);
 	}

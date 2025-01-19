@@ -23,17 +23,24 @@ namespace Acrux.CDES
 
 		public static implicit operator Either<T1, T2>(T2 value) => new(value);
 
+		public static Either<T1,T2> AsFirst(T1 first)
+			=> new Either<T1,T2>(first);
 
-		private Either(T1 value)
+		public static Either<T1, T2> AsSecond(T2 second)
+			=> new Either<T1, T2>(second);
+
+		protected Either(T1 value)
 		{
 			IsFirst = true;
 			First = value;
 		}
 
-		private Either(T2 value)
+		protected Either(T2 value)
 		{
 			IsFirst = false;
 			Second = value;
 		}
+
+		protected Either() { }
 	}
 }
