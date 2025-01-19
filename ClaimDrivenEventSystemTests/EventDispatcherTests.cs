@@ -84,7 +84,7 @@ public class EventDispatcherTests
 		EventDispatcher<Task, (Task task, Task.TaskManager manager)> taskDeliveredEvent = new();
 
 		// Student
-		EventListener<Task, (Task task, Task.TaskManager manager)> listener1 = new()
+		taskDeliveredEvent += new EventListener<Task, (Task, Task.TaskManager)>()
 		{
 			OnCorroborate = (Task task) => task.Kind == "Homework",
 			OnAccepted = ((Task task, Task.TaskManager manager) args) =>
@@ -93,10 +93,9 @@ public class EventDispatcherTests
 				args.manager.MarkAsDone();
 			}
 		};
-		taskDeliveredEvent.Add(listener1);
 
 		// Baker
-		EventListener<Task, (Task task, Task.TaskManager manager)> listener2 = new()
+		taskDeliveredEvent += new EventListener<Task, (Task task, Task.TaskManager manager)>()
 		{
 			OnCorroborate = (Task task) => task.Kind == "Bake",
 			OnAccepted = ((Task task, Task.TaskManager manager) args) =>
@@ -105,7 +104,6 @@ public class EventDispatcherTests
 				args.manager.MarkAsDone();
 			}
 		};
-		taskDeliveredEvent.Add(listener2);
 
 		(Task task, Task.TaskManager manager) = Task.New("Bake");
 		taskDeliveredEvent.Invoke(task, (task, manager));

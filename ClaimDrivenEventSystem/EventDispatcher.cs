@@ -1,4 +1,6 @@
-﻿namespace Acrux.CDES;
+﻿using System.ComponentModel;
+
+namespace Acrux.CDES;
 
 /// <summary>
 /// Manages the invokation of an event, where different <see cref="EventListener{TArgs}"/> are attached to in.<br></br>
@@ -10,6 +12,18 @@
 public class EventDispatcher<TCorroborateArgs, TClaimArgs>
 {
 	private List<EventListener<TCorroborateArgs, TClaimArgs>> Listeners { get; } = [];
+
+	public static EventDispatcher<TCorroborateArgs, TClaimArgs> operator +(EventDispatcher<TCorroborateArgs, TClaimArgs> dispatcher, EventListener<TCorroborateArgs, TClaimArgs> listener)
+	{
+		dispatcher.Add(listener);
+		return dispatcher;
+	}
+
+	public static EventDispatcher<TCorroborateArgs, TClaimArgs> operator -(EventDispatcher<TCorroborateArgs, TClaimArgs> dispatcher, EventListener<TCorroborateArgs, TClaimArgs> listener)
+	{
+		dispatcher.Remove(listener);
+		return dispatcher;
+	}
 
 	/// <summary>
 	/// Notifies all <see cref="Listeners"/> in order to "claim" the event and
