@@ -1,4 +1,4 @@
-﻿namespace Acrux.CDES;
+﻿namespace Acrux.EventSystems.ClaimDriven;
 
 /// <summary>
 /// Manages the behaviour taken in the invokation of an event from a <see cref="ClaimEventDispatcher{TArgs}"/>.<br></br>

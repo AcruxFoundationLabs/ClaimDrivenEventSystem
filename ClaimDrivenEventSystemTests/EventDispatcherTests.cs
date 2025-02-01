@@ -1,5 +1,4 @@
-﻿using Acrux.CDES;
-namespace CDES.Tests;
+﻿namespace Acrux.EventSystems.ClaimDriven.Tests;
 
 [TestClass]
 public class EventDispatcherTests

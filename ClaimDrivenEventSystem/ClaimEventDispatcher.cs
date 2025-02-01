@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Acrux.CDES;
+namespace Acrux.EventSystems.ClaimDriven;
 
 /// <summary>
 /// Manages the invokation of an event, where different <see cref="ClaimEventListener{TArgs}"/> are attached to in.<br></br>
